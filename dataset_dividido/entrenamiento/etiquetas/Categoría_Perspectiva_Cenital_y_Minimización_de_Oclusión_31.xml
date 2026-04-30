@@ -1,7 +1,7 @@
 <annotation>
-	<folder>dataset_prueba1</folder>
+	<folder>imagenes</folder>
 	<filename>Categoría_Perspectiva_Cenital_y_Minimización_de_Oclusión_31.jpg</filename>
-	<path>C:\Users\Tatto\OneDrive\Documentos\Metodos y procesamiento de imagenes\Proyecto\semaforo_entrenar\dataset_prueba1\Categoría_Perspectiva_Cenital_y_Minimización_de_Oclusión_31.jpg</path>
+	<path>C:\Users\Tatto\OneDrive\Documentos\Metodos y procesamiento de imagenes\Proyecto\semaforo_entrenar\dataset_dividido\entrenamiento\imagenes\Categoría_Perspectiva_Cenital_y_Minimización_de_Oclusión_31.jpg</path>
 	<source>
 		<database>Unknown</database>
 	</source>
@@ -117,6 +117,30 @@
 			<ymin>40</ymin>
 			<xmax>540</xmax>
 			<ymax>72</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>person</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>390</xmin>
+			<ymin>59</ymin>
+			<xmax>395</xmax>
+			<ymax>92</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>person</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>387</xmin>
+			<ymin>59</ymin>
+			<xmax>392</xmax>
+			<ymax>96</ymax>
 		</bndbox>
 	</object>
 </annotation>
