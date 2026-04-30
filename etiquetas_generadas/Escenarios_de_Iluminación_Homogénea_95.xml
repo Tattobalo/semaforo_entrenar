@@ -1,0 +1,24 @@
+<annotation>
+    <folder>dataset</folder>
+    <filename>Escenarios_de_Iluminación_Homogénea_95.jpg</filename>
+    <path>c:\Users\Tatto\OneDrive\Documentos\Metodos y procesamiento de imagenes\Proyecto\semaforo_entrenar\dataset_prueba1\Escenarios_de_Iluminación_Homogénea_95.jpg</path>
+    <source><database>SemaforoInteligente</database></source>
+    <size>
+        <width>1920</width>
+        <height>1080</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>motorbike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>770</xmin>
+            <ymin>279</ymin>
+            <xmax>928</xmax>
+            <ymax>474</ymax>
+        </bndbox>
+    </object>
+</annotation>

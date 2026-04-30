@@ -1,0 +1,36 @@
+<annotation>
+    <folder>dataset</folder>
+    <filename>Escenarios_de_Iluminación_Homogénea_85.jpg</filename>
+    <path>c:\Users\Tatto\OneDrive\Documentos\Metodos y procesamiento de imagenes\Proyecto\semaforo_entrenar\dataset_prueba1\Escenarios_de_Iluminación_Homogénea_85.jpg</path>
+    <source><database>SemaforoInteligente</database></source>
+    <size>
+        <width>1920</width>
+        <height>1080</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>bus</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>228</xmin>
+            <ymin>11</ymin>
+            <xmax>678</xmax>
+            <ymax>489</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>bus</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>438</xmin>
+            <ymin>50</ymin>
+            <xmax>697</xmax>
+            <ymax>449</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,24 @@
+<annotation>
+    <folder>dataset</folder>
+    <filename>Categoría_Definición_Geométrica_de_Peatones_y_Vulnerable_55.png</filename>
+    <path>c:\Users\Tatto\OneDrive\Documentos\Metodos y procesamiento de imagenes\Proyecto\semaforo_entrenar\dataset_prueba1\Categoría_Definición_Geométrica_de_Peatones_y_Vulnerable_55.png</path>
+    <source><database>SemaforoInteligente</database></source>
+    <size>
+        <width>368</width>
+        <height>322</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>202</xmin>
+            <ymin>16</ymin>
+            <xmax>340</xmax>
+            <ymax>305</ymax>
+        </bndbox>
+    </object>
+</annotation>

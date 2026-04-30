@@ -1,0 +1,24 @@
+<annotation>
+    <folder>dataset</folder>
+    <filename>Perspectiva_Cenital_y_Minimización_de_Oclusión_56.jpg</filename>
+    <path>c:\Users\Tatto\OneDrive\Documentos\Metodos y procesamiento de imagenes\Proyecto\semaforo_entrenar\dataset_prueba1\Perspectiva_Cenital_y_Minimización_de_Oclusión_56.jpg</path>
+    <source><database>SemaforoInteligente</database></source>
+    <size>
+        <width>640</width>
+        <height>640</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>bus</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>371</xmin>
+            <ymin>127</ymin>
+            <xmax>423</xmax>
+            <ymax>236</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,36 @@
+<annotation>
+    <folder>dataset</folder>
+    <filename>Categoría_Perspectiva_Cenital_y_Minimización_de_Oclusión_77.jpg</filename>
+    <path>c:\Users\Tatto\OneDrive\Documentos\Metodos y procesamiento de imagenes\Proyecto\semaforo_entrenar\dataset_prueba1\Categoría_Perspectiva_Cenital_y_Minimización_de_Oclusión_77.jpg</path>
+    <source><database>SemaforoInteligente</database></source>
+    <size>
+        <width>640</width>
+        <height>640</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>383</xmin>
+            <ymin>158</ymin>
+            <xmax>477</xmax>
+            <ymax>296</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>135</xmin>
+            <ymin>224</ymin>
+            <xmax>283</xmax>
+            <ymax>374</ymax>
+        </bndbox>
+    </object>
+</annotation>

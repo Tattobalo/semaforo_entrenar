@@ -1,0 +1,36 @@
+<annotation>
+    <folder>dataset</folder>
+    <filename>Flujo_Vehicular_y_Clasificación_Multiclase_82.jpg</filename>
+    <path>c:\Users\Tatto\OneDrive\Documentos\Metodos y procesamiento de imagenes\Proyecto\semaforo_entrenar\dataset_prueba1\Flujo_Vehicular_y_Clasificación_Multiclase_82.jpg</path>
+    <source><database>SemaforoInteligente</database></source>
+    <size>
+        <width>3968</width>
+        <height>2976</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>bus</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>2261</xmin>
+            <ymin>1525</ymin>
+            <xmax>3291</xmax>
+            <ymax>1996</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>bus</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>848</xmin>
+            <ymin>1572</ymin>
+            <xmax>2155</xmax>
+            <ymax>2017</ymax>
+        </bndbox>
+    </object>
+</annotation>

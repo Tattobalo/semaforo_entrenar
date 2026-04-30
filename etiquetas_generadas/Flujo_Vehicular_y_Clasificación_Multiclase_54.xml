@@ -1,0 +1,24 @@
+<annotation>
+    <folder>dataset</folder>
+    <filename>Flujo_Vehicular_y_Clasificación_Multiclase_54.jpg</filename>
+    <path>c:\Users\Tatto\OneDrive\Documentos\Metodos y procesamiento de imagenes\Proyecto\semaforo_entrenar\dataset_prueba1\Flujo_Vehicular_y_Clasificación_Multiclase_54.jpg</path>
+    <source><database>SemaforoInteligente</database></source>
+    <size>
+        <width>700</width>
+        <height>363</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>car</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>19</xmin>
+            <ymin>52</ymin>
+            <xmax>118</xmax>
+            <ymax>130</ymax>
+        </bndbox>
+    </object>
+</annotation>
