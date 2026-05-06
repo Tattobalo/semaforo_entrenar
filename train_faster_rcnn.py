@@ -2,7 +2,7 @@
 =============================================================================
 SISTEMA DE SEMÁFORO INTELIGENTE - ENTRENAMIENTO FASTER R-CNN
 =============================================================================
-Detecta: bicycle, motorbike, bus, truck, person, car
+Detecta: bicycle, motorbike (alias: motorcycle), bus, truck, person, car
 Estructura esperada:
     dataset_dividido/
         Entrenamiento/
@@ -69,20 +69,39 @@ CLASS_TO_IDX = {cls: idx for idx, cls in enumerate(CLASSES)}
 
 # --- Hiperparámetros de entrenamiento ---
 NUM_EPOCHS      = 20        # Épocas totales de entrenamiento
-BATCH_SIZE      = 4         # Imágenes por batch (reduce si hay OOM)
+# RTX 3060 12 GB: batch 6 aprovecha bien la VRAM con ResNet50-FPN.
+# Si aparece CUDA Out-Of-Memory, baja a 4.
+BATCH_SIZE      = 6
 LEARNING_RATE   = 0.005     # Tasa de aprendizaje inicial
 MOMENTUM        = 0.9       # Momentum para SGD
 WEIGHT_DECAY    = 0.0005    # Regularización L2
 LR_STEP_SIZE    = 7         # Reducir LR cada N épocas
 LR_GAMMA        = 0.1       # Factor de reducción del LR
-NUM_WORKERS     = 2         # Hilos para carga de datos (0 en Windows)
+# RTX 3060 en Linux: 4 workers; en Windows usar 0 (limitación de multiprocessing)
+NUM_WORKERS     = 4
 SCORE_THRESHOLD = 0.5       # Umbral mínimo de confianza en inferencia
+
+# --- Optimizaciones específicas para RTX 3060 (Ampere, CUDA 11.x/12.x) ---
+# AMP (Automatic Mixed Precision): usa float16 en operaciones de la GPU,
+# reduciendo uso de VRAM ~40% y acelerando ~1.5-2× sin pérdida de precisión.
+USE_AMP = True
+
+# cuDNN autotuner: mide kernels al inicio y elige el más rápido para
+# los tamaños de tensor del modelo. Recomendado cuando el tamaño de
+# entrada es constante (imágenes del mismo tamaño por batch).
+import torch.backends.cudnn as cudnn
+cudnn.benchmark = True
 
 # --- Dispositivo de cómputo ---
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"[INFO] Usando dispositivo: {DEVICE}")
 if DEVICE.type == "cuda":
     print(f"[INFO] GPU: {torch.cuda.get_device_name(0)}")
+    vram_gb = torch.cuda.get_device_properties(0).total_memory / 1e9
+    print(f"[INFO] VRAM disponible: {vram_gb:.1f} GB")
+    print(f"[INFO] AMP (mixed precision): {'ACTIVADO' if USE_AMP else 'DESACTIVADO'}")
+else:
+    USE_AMP = False   # AMP solo tiene sentido en CUDA
 
 
 # =============================================================================
@@ -145,6 +164,16 @@ class SemaforoDataset(Dataset):
 
         for obj in root.findall("object"):
             class_name = obj.find("name").text.strip().lower()
+
+            # ── Normalización de alias en etiquetas ───────────────────────
+            # "motorcycle" se usó como etiqueta alternativa durante el
+            # proceso de anotación. Se mapea a "motorbike" que es el nombre
+            # canónico del proyecto, para que ambas variantes sean tratadas
+            # como la misma clase sin necesidad de re-etiquetar los XMLs.
+            LABEL_ALIASES = {
+                "motorcycle": "motorbike",   # alias detectado en el dataset
+            }
+            class_name = LABEL_ALIASES.get(class_name, class_name)
 
             # Ignorar clases no definidas en el proyecto
             if class_name not in CLASS_TO_IDX:
@@ -288,7 +317,7 @@ def build_model(num_classes: int):
 # todos los batches del conjunto de entrenamiento.
 # =============================================================================
 
-def train_one_epoch(model, optimizer, data_loader, device, epoch):
+def train_one_epoch(model, optimizer, data_loader, device, epoch, scaler=None):
     """
     Entrena el modelo durante una época completa.
 
@@ -298,6 +327,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch):
         data_loader : DataLoader de entrenamiento
         device      : CPU o CUDA
         epoch       : Número de época actual (para logging)
+        scaler      : torch.cuda.amp.GradScaler para AMP (None = desactivado)
 
     Returns:
         avg_loss : Pérdida promedio de la época
@@ -312,18 +342,25 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch):
         images  = [img.to(device)   for img in images]
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
-        # ── Forward pass ──────────────────────────────────────────────────
-        # En modo train, Faster R-CNN retorna un dict de pérdidas:
-        #   loss_classifier, loss_box_reg, loss_objectness, loss_rpn_box_reg
-        loss_dict = model(images, targets)
+        # ── Forward pass con AMP ───────────────────────────────────────────
+        # torch.autocast usa float16 en operaciones de la GPU que lo soporten
+        # (conv, matmul) y mantiene float32 donde se necesita precisión.
+        # Si scaler es None (CPU o AMP desactivado), el bloque es transparente.
+        with torch.autocast(device_type=device.type, enabled=(scaler is not None)):
+            loss_dict = model(images, targets)
+            losses    = sum(loss for loss in loss_dict.values())
 
-        # Suma todas las pérdidas parciales
-        losses = sum(loss for loss in loss_dict.values())
-
-        # ── Backward pass ─────────────────────────────────────────────────
-        optimizer.zero_grad()   # Limpiar gradientes del batch anterior
-        losses.backward()       # Calcular gradientes
-        optimizer.step()        # Actualizar pesos
+        # ── Backward pass con scaler ───────────────────────────────────────
+        optimizer.zero_grad()
+        if scaler is not None:
+            # El scaler escala el loss para evitar underflow en float16,
+            # luego desescala los gradientes antes de optimizer.step().
+            scaler.scale(losses).backward()
+            scaler.step(optimizer)
+            scaler.update()
+        else:
+            losses.backward()
+            optimizer.step()
 
         total_loss += losses.item()
 
@@ -574,6 +611,13 @@ def main():
         weight_decay=WEIGHT_DECAY,
     )
 
+    # ── 12.4b GradScaler para AMP ─────────────────────────────────────────
+    # GradScaler previene el underflow numérico al trabajar con float16.
+    # Solo se instancia si USE_AMP=True (requiere GPU CUDA).
+    scaler = torch.cuda.amp.GradScaler() if USE_AMP else None
+    if scaler:
+        print("[AMP] GradScaler activado — entrenamiento en mixed precision")
+
     # ── 12.5 Scheduler de tasa de aprendizaje ────────────────────────────
     # Reduce el LR por un factor GAMMA cada LR_STEP_SIZE épocas.
     # Permite convergencia fina después de una fase de exploración amplia.
@@ -595,7 +639,7 @@ def main():
         print(f"{'─'*60}")
 
         # Entrenamiento
-        train_loss = train_one_epoch(model, optimizer, train_loader, DEVICE, epoch)
+        train_loss = train_one_epoch(model, optimizer, train_loader, DEVICE, epoch, scaler)
 
         # Validación
         val_loss = evaluate(model, val_loader, DEVICE)
