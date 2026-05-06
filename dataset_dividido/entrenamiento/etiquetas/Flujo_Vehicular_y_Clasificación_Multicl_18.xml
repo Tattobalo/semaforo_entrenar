@@ -1,12 +1,38 @@
 <annotation>
-    <folder>dataset</folder>
-    <filename>Flujo_Vehicular_y_Clasificación_Multicl_18.jpg</filename>
-    <path>c:\Users\Tatto\OneDrive\Documentos\Metodos y procesamiento de imagenes\Proyecto\semaforo_entrenar\dataset_prueba1\Flujo_Vehicular_y_Clasificación_Multicl_18.jpg</path>
-    <source><database>SemaforoInteligente</database></source>
-    <size>
-        <width>640</width>
-        <height>640</height>
-        <depth>3</depth>
-    </size>
-    <segmented>0</segmented>
+	<folder>imagenes</folder>
+	<filename>Flujo_Vehicular_y_Clasificación_Multicl_18.jpg</filename>
+	<path>C:\Users\Tatto\OneDrive\Documentos\Metodos y procesamiento de imagenes\Proyecto\semaforo_entrenar\dataset_dividido\entrenamiento\imagenes\Flujo_Vehicular_y_Clasificación_Multicl_18.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>640</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>car</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>150</xmin>
+			<ymin>412</ymin>
+			<xmax>217</xmax>
+			<ymax>509</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>motorbike</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>246</xmin>
+			<ymin>428</ymin>
+			<xmax>279</xmax>
+			<ymax>502</ymax>
+		</bndbox>
+	</object>
 </annotation>
