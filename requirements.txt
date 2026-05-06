@@ -1,0 +1,11 @@
+# Dependencias — Semáforo Inteligente Faster R-CNN
+# Instalar con: pip install -r requirements.txt
+
+torch>=2.0.0
+torchvision>=0.15.0
+Pillow>=9.0.0
+matplotlib>=3.5.0
+numpy>=1.21.0
+
+# Opcional: para métricas COCO (mAP)
+# pycocotools>=2.0.6
