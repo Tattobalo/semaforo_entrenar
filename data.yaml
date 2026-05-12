@@ -1,0 +1,11 @@
+names:
+- person
+- bicycle
+- motorbike
+- car
+- bus
+- truck
+nc: 6
+path: C:\Users\Tatto\OneDrive\Documentos\Metodos y procesamiento de imagenes\Proyecto\semaforo_entrenar\dataset_dividido
+train: Entrenamiento\images
+val: Validacion\images

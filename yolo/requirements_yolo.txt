@@ -1,0 +1,14 @@
+# Dependencias — Semáforo Inteligente YOLOv8
+# Instalar con: pip install -r requirements_yolo.txt
+
+# YOLOv8 (incluye torch, torchvision, numpy, opencv, matplotlib, pyyaml, etc.)
+ultralytics>=8.0.0
+
+# Exportación a otros formatos (opcional)
+# onnx>=1.14.0          # Exportar a ONNX
+# onnxruntime-gpu>=1.16 # Inferencia ONNX en GPU
+# tensorrt              # TensorRT (requiere instalación manual de NVIDIA)
+
+# Visualización
+matplotlib>=3.5.0
+Pillow>=9.0.0
