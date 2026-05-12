@@ -1,0 +1,8 @@
+# Ignorar carpetas pesadas
+venv_semaforo/
+dataset_dividido/
+dataset_prueba1/
+fotos_prueba/
+
+# Ignorar TODA la carpeta de resultados por defecto
+runs/

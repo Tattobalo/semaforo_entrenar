@@ -403,13 +403,21 @@ if __name__ == "__main__":
 
     # ── Paso 2: Entrenar ───────────────────────────────────────────────────
     print("\n[Paso 2] Entrenando YOLOv8m...")
-    model, train_results = entrenar()
+    model = entrenar()
 
     # ── Paso 3: Validar con best.pt ────────────────────────────────────────
     print("\n[Paso 3] Cargando best.pt para validación final...")
-    best_weights = os.path.join(PROJECT_DIR, RUN_NAME, "weights", "best.pt")
-    model_best   = YOLO(best_weights)
-    metrics      = validar(model_best)
+
+    if hasattr(model, 'trainer') and model.trainer is not None:
+        best_weights = model.trainer.best
+        print(f"Usando pesos encontrados en: {best_weights}")
+    else:
+        # Fallback manual si no viene del entrenamiento directo
+        best_weights = os.path.join(PROJECT_DIR, RUN_NAME, "weights", "best.pt")
+
+    # ESTO DEBE ESTAR FUERA DEL ELSE (alineado con el 'if')
+    model_best = YOLO(best_weights)
+    metrics    = validar(model_best)
 
     # ── Paso 4: Visualizar predicciones ────────────────────────────────────
     print("\n[Paso 4] Generando visualizaciones...")

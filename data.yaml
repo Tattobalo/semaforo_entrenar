@@ -1,11 +1,12 @@
-names:
-- person
-- bicycle
-- motorbike
-- car
-- bus
-- truck
+path: C:/Users/Furina/semaforo_entrenar/dataset_dividido
+train: Entrenamiento/images
+val: Validacion/images
+
 nc: 6
-path: C:\Users\Tatto\OneDrive\Documentos\Metodos y procesamiento de imagenes\Proyecto\semaforo_entrenar\dataset_dividido
-train: Entrenamiento\images
-val: Validacion\images
+names:
+  0: person
+  1: bicycle
+  2: motorbike
+  3: car
+  4: bus
+  5: truck
